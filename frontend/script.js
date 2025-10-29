@@ -10,6 +10,16 @@ const btnAuth = document.getElementById('btnAuth');
 const mudarModo = document.getElementById('mudarModo');
 const mensagem = document.getElementById('mensagem');
 
+const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+if (!usuario) {
+  // usuário não logado → redireciona para login
+  window.location.href = "index.html";
+} else {
+  // usuário logado → podemos acessar as propriedades
+  document.getElementById("bemVindo").textContent = `🎬 Bem-vindo(a), ${usuario.nome}!`;
+}
+
 mudarModo.addEventListener('click', e => {
   e.preventDefault();
   modoCadastro = !modoCadastro;
