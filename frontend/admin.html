@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - CineMovie</title>
+  <style>
+    body { font-family: Arial; margin: 20px; background: #101010; color: white; }
+    input, textarea, button { display:block; margin:8px 0; padding:8px; width:300px; }
+    table { border-collapse: collapse; margin-top: 20px; background:white; color:black; }
+    th, td { border:1px solid #ccc; padding:8px; }
+  </style>
+</head>
+<body>
+  <h1>🎬 Painel do Administrador</h1>
+  <p>Bem-vindo(a), <span id="nomeAdmin"></span>!</p>
+
+  <h2>Adicionar Novo Filme</h2>
+  <input type="text" id="tituloFilme" placeholder="Título">
+  <textarea id="descricaoFilme" placeholder="Descrição"></textarea>
+  <input type="text" id="imagemFilme" placeholder="Link da imagem">
+  <button id="btnAddFilme">Adicionar Filme</button>
+  <div id="mensagemFilme"></div>
+
+  <h2>Filmes Cadastrados</h2>
+  <table id="tabelaFilmes">
+    <thead>
+      <tr><th>ID</th><th>Título</th><th>Descrição</th><th>Imagem</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    if (!usuario || usuario.papel !== 'Admin') window.location.href = 'index.html';
+    document.getElementById('nomeAdmin').textContent = usuario.nome;
+
+    const btnAddFilme = document.getElementById('btnAddFilme');
+    const tabela = document.querySelector('#tabelaFilmes tbody');
+    const msg = document.getElementById('mensagemFilme');
+
+    async function carregarFilmes() {
+      const res = await fetch('/api/filmes');
+      const filmes = await res.json();
+      tabela.innerHTML = '';
+      filmes.forEach(f => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${f.id_filme}</td><td>${f.titulo}</td><td>${f.descricao||''}</td><td>${f.imagem||''}</td>`;
+        tabela.appendChild(tr);
+      });
+    }
+
+    btnAddFilme.addEventListener('click', async () => {
+      const dados = {
+        titulo: document.getElementById('tituloFilme').value,
+        descricao: document.getElementById('descricaoFilme').value,
+        imagem: document.getElementById('imagemFilme').value
+      };
+      const res = await fetch('/api/filmes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dados)
+      });
+      const result = await res.json();
+      msg.textContent = result.message || result.error;
+      carregarFilmes();
+    });
+
+    carregarFilmes();
+  </script>
+</body>
+</html>

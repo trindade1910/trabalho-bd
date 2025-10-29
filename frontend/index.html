@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineMovie 🍿</title>
+  <link rel="stylesheet" href="home.css">
+</head>
+<body>
+  <header class="topo">
+    <img src="img/popcorn.png" alt="Pipoca" class="icon">
+    <h1>CineMovie</h1>
+    <button class="btn-sair" onclick="sair()">Sair</button>
+  </header>
+
+  <section class="boas-vindas">
+    <h2 id="bemVindo">🎬 Bem-vindo(a)!</h2>
+    <p>“Onde cada filme é uma nova emoção.”</p>
+  </section>
+
+  <section class="catalogo">
+    <h2>📽️ Em Cartaz</h2>
+    <div id="listaFilmes" class="filmes"></div>
+  </section>
+
+  <script>
+    // Verifica usuário logado
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    if (!usuario) window.location.href = "index.html";
+
+    // Atualiza nome do usuário
+    document.getElementById("bemVindo").textContent = `🎬 Bem-vindo(a), ${usuario.nome}!`;
+
+    // Função para sair
+    function sair() {
+      localStorage.removeItem("usuario");
+      window.location.href = "index.html";
+    }
+
+    // Carrega filmes
+    async function carregarFilmes() {
+      try {
+        const res = await fetch("/api/filmes");
+        const filmes = await res.json();
+
+        const container = document.getElementById("listaFilmes");
+        container.innerHTML = "";
+
+        if (filmes.length === 0) {
+          container.innerHTML = "<p>Nenhum filme cadastrado ainda 😢</p>";
+          return;
+        }
+
+        filmes.forEach(filme => {
+          const card = document.createElement("div");
+          card.classList.add("filme-card");
+
+          card.innerHTML = `
+            <img src="${filme.imagem || 'img/default.jpg'}" alt="${filme.titulo}">
+            <h3>${filme.titulo}</h3>
+            <p>${filme.descricao || 'Sem descrição disponível.'}</p>
+          `;
+
+          container.appendChild(card);
+        });
+      } catch (error) {
+        console.error("Erro ao carregar filmes:", error);
+      }
+    }
+
+    carregarFilmes();
+  </script>
+</body>
+</html>

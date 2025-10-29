@@ -1,0 +1,135 @@
+body {
+  background: radial-gradient(circle at top, #1a002e, #090010);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Container de boas-vindas */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  animation: fadeIn 1.2s ease;
+}
+
+/* Ícone */
+.home-container img {
+  width: 80px;
+  margin-bottom: 20px;
+  animation: flutuar 3s ease-in-out infinite;
+}
+
+/* Título */
+.home-container h1 {
+  font-size: 2.6em;
+  color: #b47fff;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px #b47fff, 0 0 25px #7a3fff;
+}
+
+/* Frase */
+.home-container p {
+  font-size: 1.2em;
+  color: #ddd;
+  margin-bottom: 30px;
+  letter-spacing: 0.5px;
+  font-style: italic;
+}
+
+/* Botão de sair */
+.btn-sair {
+  background-color: #ff007f;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+}
+
+.btn-sair:hover {
+  background-color: #ff3399;
+  box-shadow: 0 0 15px rgba(255, 0, 127, 0.7);
+  transform: scale(1.05);
+}
+
+/* === Catálogo de Filmes === */
+
+.catalogo {
+  padding: 40px 20px;
+}
+
+.catalogo h2 {
+  font-size: 1.8em;
+  margin-bottom: 25px;
+  color: #d6a3ff;
+  text-shadow: 0 0 8px rgba(182, 117, 255, 0.7);
+}
+
+/* Grid de filmes */
+.filmes {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 18px;
+  padding-bottom: 20px;
+  scrollbar-width: none;
+}
+
+.filmes::-webkit-scrollbar {
+  display: none;
+}
+
+/* Card de filme */
+.filme-card {
+  background: #150021;
+  border-radius: 15px;
+  box-shadow: 0 0 12px rgba(180, 127, 255, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex: 0 0 auto;
+  width: 180px;
+  cursor: pointer;
+}
+
+.filme-card img {
+  width: 100%;
+  border-radius: 15px 15px 0 0;
+}
+
+.filme-card h3 {
+  margin: 10px 0;
+  font-size: 1em;
+  color: #f8e9ff;
+}
+
+.filme-card:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 20px rgba(180, 127, 255, 0.5);
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .home-container h1 { font-size: 2em; }
+  .home-container p { font-size: 1em; }
+  .btn-sair { padding: 10px 22px; font-size: 0.9em; }
+  .filme-card { width: 140px; }
+}

@@ -1,0 +1,155 @@
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, rgb(255, 24, 24), rgb(255, 222, 92));
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      color: #fff;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 25px rgba(35, 35, 35, 0.2);
+      width: 320px;
+      text-align: center;
+    }
+
+.branding {
+  text-align: center;
+  margin-bottom: 30px;
+  animation: fadeInDown 1.2s ease;
+}
+
+.pipoca-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  animation: flutuar 3s ease-in-out infinite;
+}
+
+.pipoca-icon:hover {
+  transform: scale(1.1) rotate(10deg);
+}
+
+@keyframes flutuar {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.logo {
+  font-size: 3em;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgb(255, 24, 24);
+  font-family: 'Poppins', sans-serif;
+}
+
+.slogan {
+  font-size: 1.2em;
+  color: #000000;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
+}
+
+.slogan span {
+  color: rgb(255, 24, 24);
+  font-weight: 600;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+    h2 {
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    button {
+      background: #00c853;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #00e676;
+    }
+
+.mensagem {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 500;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .sucesso {
+      background-color: rgba(0, 200, 83, 0.9);
+    }
+
+    .erro {
+      background-color: rgba(207, 0, 0, 0.9);
+    }
+
+    .alerta {
+      background-color: rgba(255, 193, 7, 0.9);
+      color: black;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .switch {
+      margin-top: 15px;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .switch span {
+      color: #ffeb3b;
+      cursor: pointer;
+      text-decoration: underline;
+    }
