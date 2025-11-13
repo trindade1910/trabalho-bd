@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Admin | CineMovie</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+  <header class="admin-header">
+    <h1>🎬 Painel do Administrador</h1>
+    <button id="logoutBtn">Sair</button>
+  </header>
+
+  <main class="admin-main">
+    <!-- Seção de filmes -->
+    <section class="admin-section">
+      <h2>Adicionar Filme</h2>
+      <form id="addFilmeForm">
+        <input type="text" id="titulo" placeholder="Título" required>
+        <input type="text" id="descricao" placeholder="Descrição">
+        <input type="text" id="imagem" placeholder="URL da imagem">
+        <button type="submit">Adicionar</button>
+      </form>
+    </section>
+
+    <section class="admin-section">
+      <h2>Filmes Cadastrados</h2>
+      <div id="listaFilmes" class="grid"></div>
+    </section>
+
+    <!-- Seção de usuários -->
+    <section class="admin-section">
+      <h2>Usuários Cadastrados</h2>
+      <table id="tabelaUsuarios">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Papel</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="scripts/admin.js"></script>
+</body>
+</html>
