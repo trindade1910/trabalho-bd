@@ -11,23 +11,31 @@ const mensagem = document.getElementById('mensagem');
 
 let modoCadastro = false;
 
+// Todos os campos de cadastro
+const camposCadastro = document.querySelectorAll('.cadastro');
+
 // Alternar entre login e cadastro
 mudarModo.addEventListener('click', e => {
   e.preventDefault();
+
   modoCadastro = !modoCadastro;
-  nome.style.display = modoCadastro ? 'block' : 'none';
-  cpf.style.display = modoCadastro ? 'block' : 'none';
-  dataNascimento.style.display = modoCadastro ? 'block' : 'none';
-  endereco.style.display = modoCadastro ? 'block' : 'none';
+
+  camposCadastro.forEach(campo => {
+    campo.style.display = modoCadastro ? 'block' : 'none';
+  });
+
   btnAuth.textContent = modoCadastro ? 'Cadastrar' : 'Entrar';
   mudarModo.textContent = modoCadastro ? 'Já tem conta? Faça login' : 'Cadastre-se';
+  mensagem.textContent = '';
 });
 
 // Submeter formulário
 form.addEventListener('submit', async e => {
   e.preventDefault();
+  mensagem.textContent = '⏳ Processando...';
 
-  const dados = {
+  // Dados para cadastro
+  const dadosCadastro = {
     nome: nome.value.trim(),
     cpf: cpf.value.trim(),
     email: email.value.trim(),
@@ -36,14 +44,22 @@ form.addEventListener('submit', async e => {
     endereco: endereco.value.trim()
   };
 
+  // Dados para login
+  const dadosLogin = {
+    email: email.value.trim(),
+    senha: senha.value.trim()
+  };
+
   const rota = modoCadastro ? '/api/cadastro' : '/api/login';
+  const dadosEnviar = modoCadastro ? dadosCadastro : dadosLogin;
 
   try {
     const res = await fetch(rota, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(dados)
+      body: JSON.stringify(dadosEnviar)
     });
+
     const result = await res.json();
 
     if (result.error) {
@@ -53,20 +69,28 @@ form.addEventListener('submit', async e => {
 
     mensagem.textContent = '✅ ' + result.message;
 
-    // Se for login, salvar usuário e redirecionar
+    // ---------------- LOGIN ----------------
     if (!modoCadastro) {
       const usuario = result.user;
 
-      // Remove a senha do objeto por segurança
-      if (usuario.senha) delete usuario.senha;
+      if (!usuario) {
+        mensagem.textContent = '⚠️ Erro inesperado: servidor não retornou o usuário.';
+        return;
+      }
+
+      delete usuario.senha;
 
       localStorage.setItem('user', JSON.stringify(usuario));
 
-      // Redireciona dependendo do papel
+      mensagem.textContent = '✅ Login bem-sucedido! Redirecionando...';
+
       setTimeout(() => {
-        if (usuario.papel === 'Admin') window.location.href = 'admin.html';
-        else window.location.href = 'home.html';
-      }, 1000);
+        if (usuario.papel === "Admin") {
+          window.location.href = "admin.html";
+        } else {
+          window.location.href = "home.html";
+        }
+      }, 1200);
     }
 
   } catch (err) {
