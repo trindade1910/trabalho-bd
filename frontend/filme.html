@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>CineMovie - Detalhes do Filme</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <button id="voltar">⬅ Voltar</button>
+
+  <div class="filme-container">
+    <h1 id="titulo"></h1>
+
+    <div class="info">
+      <img id="imagem" />
+
+      <div class="dados">
+        <p><strong>Gênero:</strong> <span id="genero"></span></p>
+        <p><strong>Ano de lançamento:</strong> <span id="ano"></span></p>
+        <p><strong>Idiomas:</strong> <span id="idiomas"></span></p>
+        <p><strong>Duração:</strong> <span id="duracao"></span></p>
+      </div>
+    </div>
+
+    <h2>Sinopse</h2>
+    <p id="descricao"></p>
+
+    <h2>Trailer</h2>
+    <iframe id="trailer" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+  </div>
+
+  <script src="scripts/filme.js"></script>
+</body>
+</html>
