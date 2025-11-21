@@ -2,48 +2,78 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Painel Admin | CineMovie</title>
+  <title>CineMovie - Painel Admin</title>
   <link rel="stylesheet" href="admin.css">
 </head>
-<body class="admin-body">
-  <header class="admin-header">
-    <h1>🎬 Painel do Administrador</h1>
-    <button id="logoutBtn">Sair</button>
+<body>
+
+  <header>
+    <div class="botoes-topo">
+      <button id="toggleTheme">🌙 Modo Escuro</button>
+      <button id="logoutBtn">Sair</button>
+    </div>
+
+    <h1>🎬 Painel Administrativo - CineMovie</h1>
   </header>
+<button id="voltarHome" class="btn-home">🏠 Voltar para Home</button>
 
-  <main class="admin-main">
-    <!-- Seção de filmes -->
-    <section class="admin-section">
-      <h2>Adicionar Filme</h2>
+  <main class="container">
+
+    <!-- 🧩 Seção: Gerenciar Filmes -->
+    <section id="filmesSection">
+      <h2>Gerenciar Filmes</h2>
+
       <form id="addFilmeForm">
-        <input type="text" id="titulo" placeholder="Título" required>
-        <input type="text" id="descricao" placeholder="Descrição">
-        <input type="text" id="imagem" placeholder="URL da imagem">
-        <button type="submit">Adicionar</button>
-      </form>
+
+    <label>Título</label>
+    <input type="text" id="titulo" placeholder="Nome do filme">
+
+    <label>Descrição</label>
+    <textarea id="descricao" placeholder="Sinopse do filme"></textarea>
+
+    <label>Imagem (URL da capa)</label>
+    <input type="text" id="imagem" placeholder="URL da capa">
+
+    <label>Trailer (URL do YouTube)</label>
+    <input type="text" id="trailer" placeholder="URL do trailer">
+
+    <label>Gênero</label>
+    <input type="text" id="genero" placeholder="Ex: Ação, Romance, Terror">
+
+    <label>Idioma</label>
+    <input type="text" id="idioma" placeholder="Ex: PT-BR, EN, ES">
+
+    <label>Ano de lançamento</label>
+    <input type="date" id="ano_lancamento">
+
+    <button type="submit">Adicionar Filme</button>
+</form>
+
+
+      <h3>📽️ Filmes Cadastrados</h3>
+      <div id="listaFilmes" class="lista-filmes"></div>
     </section>
 
-    <section class="admin-section">
-      <h2>Filmes Cadastrados</h2>
-      <div id="listaFilmes" class="grid"></div>
-    </section>
+    <hr>
 
-    <!-- Seção de usuários -->
-    <section class="admin-section">
+    <!-- 👥 Seção: Usuários -->
+    <section id="usuariosSection">
       <h2>Usuários Cadastrados</h2>
-      <table id="tabelaUsuarios">
+
+      <table id="tabelaUsuarios" border="1">
         <thead>
           <tr>
             <th>ID</th>
             <th>Nome</th>
             <th>Email</th>
             <th>Papel</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody></tbody>
       </table>
     </section>
+
   </main>
 
   <script src="scripts/admin.js"></script>
