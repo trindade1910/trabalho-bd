@@ -11,5 +11,13 @@ CREATE TABLE usuarios (
 );
 
 create table filmes (
-  
+  id_filme INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(150) NOT NULL,
+  sinopse TEXT,
+  genero VARCHAR(100),
+  ano_lancamento YEAR,
+  idioma VARCHAR(100),
+  trailer_url VARCHAR(255),
+  capa VARCHAR(255),
+  criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
