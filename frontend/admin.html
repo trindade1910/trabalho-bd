@@ -5,6 +5,23 @@
   <title>CineMovie - Painel Admin</title>
   <link rel="stylesheet" href="admin.css">
 </head>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        // Se não estiver logado, manda pro login
+        if (!user) {
+            window.location.href = "index.html";
+            return;
+        }
+
+        // Se não for admin, manda pra home
+        if (!user.isAdmin) {
+            window.location.href = "home.html";
+            return;
+        }
+    });
+</script>
 <body>
 
   <header>
