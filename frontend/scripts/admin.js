@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
       nome: document.getElementById('titulo').value.trim(),
       sinopse: document.getElementById('descricao').value.trim(),
       capa: document.getElementById('imagem').value.trim(),
-      trailer: document.getElementById('trailer').value.trim(),
+      trailer_url: document.getElementById('trailer').value.trim(),
       genero: document.getElementById('genero').value.trim(),
       idioma: document.getElementById('idioma').value.trim(),
       ano_lancamento: document.getElementById('ano_lancamento').value
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('titulo').value = f.nome;
     document.getElementById('descricao').value = f.sinopse;
     document.getElementById('imagem').value = f.capa;
-    document.getElementById('trailer').value = f.trailer;
+    document.getElementById('trailer').value = f.trailer_url;
     document.getElementById('genero').value = f.genero;
     document.getElementById('idioma').value = f.idioma;
     document.getElementById('ano_lancamento').value = f.ano_lancamento.split("T")[0];
