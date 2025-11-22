@@ -10,7 +10,7 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
-// Servir frontend
+// Servir frontend (ajuste se a pasta for diferente)
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 let MYSQL_ATIVO = true;
@@ -52,15 +52,15 @@ let filmesOffline = [
     nome: 'Avatar 2',
     genero: 'Ficção',
     duracao: '03:12:00',
-    ano_lancamento: '2022-12-10',
+    ano_lancamento: '2022',
     sinopse: "Jake Sully luta para proteger sua família em Pandora.",
-    trailer: "https://www.youtube.com/embed/a8Gx8wiNbs8",
+    trailer_url: "https://www.youtube.com/embed/a8Gx8wiNbs8",
     idioma: "Inglês, Português",
     capa: "https://i.imgur.com/lVFcvn2.jpeg"
   }
 ];
 
-// cad
+// cad (usuários)
 app.post('/api/cadastro', (req, res) => {
   const { nome, cpf, email, senha, data_nascimento, endereco } = req.body;
 
@@ -171,9 +171,10 @@ app.get('/filmes/:id', (req, res) => {
 
 // POST FILME
 app.post('/filmes', (req, res) => {
-  const { nome, genero, ano_lancamento, sinopse, trailer, idioma, capa } = req.body;
+  // atenção: usamos trailer_url aqui
+  const { nome, genero, ano_lancamento, sinopse, trailer_url, idioma, capa } = req.body;
 
-  if (!nome || !genero || !ano_lancamento || !sinopse || !trailer || !idioma || !capa)
+  if (!nome || !genero || !ano_lancamento || !sinopse || !trailer_url || !idioma || !capa)
     return res.status(400).json({ error: 'Preencha todos os campos.' });
 
   if (!MYSQL_ATIVO) {
@@ -183,7 +184,7 @@ app.post('/filmes', (req, res) => {
       genero,
       ano_lancamento,
       sinopse,
-      trailer,
+      trailer_url,
       idioma,
       capa
     });
@@ -196,7 +197,10 @@ app.post('/filmes', (req, res) => {
   `;
 
   db.query(sql, [nome, genero, ano_lancamento, sinopse, trailer_url, idioma, capa], err => {
-    if (err) return res.status(500).json({ error: 'Erro ao adicionar filme.' });
+    if (err) {
+      console.error('Erro INSERT filmes:', err);
+      return res.status(500).json({ error: 'Erro ao adicionar filme.' });
+    }
     res.json({ message: 'Filme adicionado!' });
   });
 });
@@ -221,7 +225,10 @@ app.put('/filmes/:id', (req, res) => {
   `;
 
   db.query(sql, [nome, genero, ano_lancamento, sinopse, trailer_url, idioma, capa, id], err => {
-    if (err) return res.status(500).json({ error: 'Erro ao atualizar filme.' });
+    if (err) {
+      console.error('Erro UPDATE filmes:', err);
+      return res.status(500).json({ error: 'Erro ao atualizar filme.' });
+    }
     res.json({ message: 'Filme atualizado!' });
   });
 });
@@ -241,13 +248,33 @@ app.delete('/filmes/:id', (req, res) => {
   });
 });
 
-// admin user
-app.get('/api/usuarios', (req, res) => {
+// LISTAR USUÁRIOS (rota para front-end '/usuarios')
+app.get('/usuarios', (req, res) => {
   if (!MYSQL_ATIVO) return res.json(usuariosOffline);
 
   db.query('SELECT id_cliente, nome, email, papel FROM usuarios', (err, results) => {
     if (err) return res.status(500).json({ error: 'Erro ao buscar usuários.' });
     res.json(results);
+  });
+});
+
+// Alias para compatibilidade (mantém /api/usuarios também)
+app.get('/api/usuarios', (req, res) => {
+  return app._router.handle(req, res, () => {}); // delega para '/usuarios'
+});
+
+// DELETE usuário (para frontend chamar /usuarios/:id)
+app.delete('/usuarios/:id', (req, res) => {
+  const id = req.params.id;
+
+  if (!MYSQL_ATIVO) {
+    usuariosOffline = usuariosOffline.filter(u => u.id_cliente != id);
+    return res.json({ message: 'Usuário removido (offline).' });
+  }
+
+  db.query('DELETE FROM usuarios WHERE id_cliente = ?', [id], err => {
+    if (err) return res.status(500).json({ error: 'Erro ao excluir usuário.' });
+    res.json({ message: 'Usuário removido!' });
   });
 });
 
