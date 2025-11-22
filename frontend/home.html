@@ -1,22 +1,62 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>CineMovie - Home</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="home.css" />
 </head>
 <body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">Cine<span>Movie</span></div>
 
-  <div class="container">
-    <h1 id="bemVindo">🎬 Bem-vindo(a)!</h1>
-    <button id="btnAdmin" style="display:none;">Painel Admin</button>
-    <button id="logout">Sair</button>
-    <p>Aproveite os melhores filmes com o CineMovie 🍿</p>
-  </div>
-  <div id="modalFilme" class="modal">
+      <nav class="nav">
+        <button id="btnHome" class="nav-btn active">Início</button>
+        <button id="btnCatalogo" class="nav-btn">Catálogo</button>
+      </nav>
+
+      <div class="header-actions">
+      <a href="admin.html" class="btn-admin">Admin</a>
+        <button id="logout" class="btn-sair">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO / BANNER -->
+  <section class="hero" id="hero">
+    <div class="hero-overlay">
+      <div class="hero-content container">
+        <div class="hero-text">
+          <h1 class="hero-title">Bem-vindo(a) ao CineMovie</h1>
+          <p class="hero-sub">Os melhores lançamentos e clássicos — tudo num só lugar.</p>
+          <div class="hero-ctas">
+            <button id="verAgora" class="primary">Assistir Trailer</button>
+            <button id="maisInfo" class="outline">Mais informações</button>
+          </div>
+        </div>
+        <div class="hero-art">
+          <!-- espaço para poster dinâmico (preenchido com .capa do primeiro filme via JS opcional) -->
+          <img src="https://i.imgur.com/lVFcvn2.jpeg" alt="Poster destaque" id="heroPoster" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO -->
+  <main class="catalogo container">
+    <h2 class="catalogo-title">Filmes Disponíveis</h2>
+
+    <div class="filmes-row" id="listaFilmes">
+      <!-- cards adicionados dinamicamente por home.js -->
+      <!-- exemplo de skeleton / placeholder será substituído -->
+    </div>
+  </main>
+
+  <!-- MODAL -->
+  <div id="modalFilme" class="modal" aria-hidden="true">
     <div id="modalConteudo" class="modal-conteudo"></div>
-</div>
-
+  </div>
 
   <script src="scripts/home.js"></script>
 </body>
