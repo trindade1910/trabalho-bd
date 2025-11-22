@@ -191,11 +191,11 @@ app.post('/filmes', (req, res) => {
   }
 
   const sql = `
-    INSERT INTO filmes (nome, genero, ano_lancamento, sinopse, trailer, idioma, capa)
+    INSERT INTO filmes (nome, genero, ano_lancamento, sinopse, trailer_url, idioma, capa)
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
 
-  db.query(sql, [nome, genero, ano_lancamento, sinopse, trailer, idioma, capa], err => {
+  db.query(sql, [nome, genero, ano_lancamento, sinopse, trailer_url, idioma, capa], err => {
     if (err) return res.status(500).json({ error: 'Erro ao adicionar filme.' });
     res.json({ message: 'Filme adicionado!' });
   });
@@ -204,23 +204,23 @@ app.post('/filmes', (req, res) => {
 // PUT FILME
 app.put('/filmes/:id', (req, res) => {
   const id = req.params.id;
-  const { nome, genero, ano_lancamento, sinopse, trailer, idioma, capa } = req.body;
+  const { nome, genero, ano_lancamento, sinopse, trailer_url, idioma, capa } = req.body;
 
   if (!MYSQL_ATIVO) {
     const filme = filmesOffline.find(f => f.id_filme == id);
     if (!filme) return res.status(404).json({ error: 'Não encontrado' });
 
-    Object.assign(filme, { nome, genero, ano_lancamento, sinopse, trailer, idioma, capa });
+    Object.assign(filme, { nome, genero, ano_lancamento, sinopse, trailer_url, idioma, capa });
     return res.json({ message: 'Atualizado offline!' });
   }
 
   const sql = `
     UPDATE filmes 
-    SET nome=?, genero=?, ano_lancamento=?, sinopse=?, trailer=?, idioma=?, capa=? 
+    SET nome=?, genero=?, ano_lancamento=?, sinopse=?, trailer_url=?, idioma=?, capa=? 
     WHERE id_filme=?
   `;
 
-  db.query(sql, [nome, genero, ano_lancamento, sinopse, trailer, idioma, capa, id], err => {
+  db.query(sql, [nome, genero, ano_lancamento, sinopse, trailer_url, idioma, capa, id], err => {
     if (err) return res.status(500).json({ error: 'Erro ao atualizar filme.' });
     res.json({ message: 'Filme atualizado!' });
   });
